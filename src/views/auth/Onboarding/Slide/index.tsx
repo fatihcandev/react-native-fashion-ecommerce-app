@@ -8,19 +8,18 @@ import {
   ViewStyle,
 } from "react-native";
 
-import { SLIDE_HEIGHT } from "../../../../constants";
-
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
+export const SLIDE_HEIGHT = 0.61 * height;
 
 const styles = StyleSheet.create({
   container: {
     width,
   },
-  labelContainer: {
+  titleContainer: {
     height: 100,
     justifyContent: "center",
   },
-  label: {
+  title: {
     fontSize: 80,
     lineHeight: 80,
     color: "white",
@@ -30,13 +29,13 @@ const styles = StyleSheet.create({
 });
 
 interface ISlideProps {
-  label: string;
+  title: string;
   right?: boolean;
 }
 
-const Slide: React.FC<ISlideProps> = ({ label, right }) => {
-  const labelStyle: StyleProp<ViewStyle> = {
-    ...styles.labelContainer,
+const Slide: React.FC<ISlideProps> = ({ title, right }) => {
+  const titleStyle: StyleProp<ViewStyle> = {
+    ...styles.titleContainer,
     transform: [
       {
         translateY: (SLIDE_HEIGHT - 100) / 2,
@@ -52,8 +51,8 @@ const Slide: React.FC<ISlideProps> = ({ label, right }) => {
 
   return (
     <View style={styles.container}>
-      <View style={labelStyle}>
-        <Text style={styles.label}>{label}</Text>
+      <View style={titleStyle}>
+        <Text style={styles.title}>{title}</Text>
       </View>
     </View>
   );

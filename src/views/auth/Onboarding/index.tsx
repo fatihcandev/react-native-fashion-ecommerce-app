@@ -1,22 +1,25 @@
-import React from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
-import Animated from "react-native-reanimated";
+import React, { useRef } from "react";
+import {
+  Dimensions,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from "react-native";
+import Animated, { multiply } from "react-native-reanimated";
 import {
   onScrollEvent,
   useValue,
   interpolateColor,
 } from "react-native-redash/lib/module/v1";
 
-import { SLIDE_HEIGHT } from "../../../constants";
+import { slides } from "../../../data/onboardingSlides";
 
-import Slide from "./Slide";
-
-interface OnBoardingSlideData {
-  label: string;
-  color: string;
-}
+import Slide, { SLIDE_HEIGHT } from "./Slide";
+import SubSlide from "./SubSlide";
 
 const { width } = Dimensions.get("window");
+const BORDER_RADIUS = 75;
 
 const styles = StyleSheet.create({
   container: {
@@ -26,37 +29,46 @@ const styles = StyleSheet.create({
   slider: {
     height: SLIDE_HEIGHT,
     backgroundColor: "cyan",
-    borderBottomRightRadius: 75,
+    borderBottomRightRadius: BORDER_RADIUS,
   },
   footer: {
     flex: 1,
   },
-  footerCurvedShape: {
+  footerContent: {
     flex: 1,
+    flexDirection: "row",
     backgroundColor: "white",
-    borderTopLeftRadius: 75,
+    borderTopLeftRadius: BORDER_RADIUS,
   },
 });
 
-const slides: OnBoardingSlideData[] = [
-  { label: "Relaxed", color: "#bfeaf5" },
-  { label: "Playful", color: "#beecc4" },
-  { label: "Excentric", color: "#ffe4d9" },
-  { label: "Funky", color: "#ffdddd" },
-];
-
-const Onboarding = () => {
+const Onboarding: React.FC = () => {
+  const scroll = useRef<Animated.ScrollView>(null);
   const x = useValue(0);
   const onScroll = onScrollEvent({ x });
   const backgroundColor = interpolateColor(x, {
     inputRange: slides.map((_, i) => i * width),
     outputRange: slides.map(slide => slide.color),
   });
+  const footerContentStyle: StyleProp<Animated.AnimateStyle<ViewStyle>> = {
+    ...styles.footerContent,
+    width: width * slides.length,
+    transform: [{ translateX: multiply(x, -1) }],
+  };
+
+  const handleScrollToNextSlide = (index: number) => {
+    if (scroll.current) {
+      scroll.current
+        .getNode()
+        .scrollTo({ x: width * (index + 1), animated: true });
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.slider, { backgroundColor }]}>
         <Animated.ScrollView
+          ref={scroll}
           horizontal
           snapToInterval={width}
           decelerationRate="fast"
@@ -65,8 +77,8 @@ const Onboarding = () => {
           scrollEventThrottle={1}
           {...{ onScroll }}
         >
-          {slides.map(({ label }, index) => (
-            <Slide key={index} {...{ label }} right={!!(index % 2)} />
+          {slides.map(({ title }, index) => (
+            <Slide key={index} {...{ title }} right={!!(index % 2)} />
           ))}
         </Animated.ScrollView>
       </Animated.View>
@@ -77,7 +89,16 @@ const Onboarding = () => {
             backgroundColor,
           }}
         />
-        <View style={styles.footerCurvedShape} />
+        <Animated.View style={footerContentStyle}>
+          {slides.map(({ subtitle, desc }, index) => (
+            <SubSlide
+              key={index}
+              {...{ subtitle, desc }}
+              last={index === slides.length - 1}
+              onButtonPress={() => handleScrollToNextSlide(index)}
+            />
+          ))}
+        </Animated.View>
       </View>
     </View>
   );

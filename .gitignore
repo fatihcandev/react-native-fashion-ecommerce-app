@@ -8,8 +8,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-.expo/
-.expo-shared/
+.expo
+.expo-shared
 yarn.lock
 
 # macOS

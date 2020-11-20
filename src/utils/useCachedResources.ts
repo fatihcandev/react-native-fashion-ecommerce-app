@@ -1,5 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import * as Font from "expo-font";
+import { Asset } from "expo-asset";
+
+const images = [
+  require("../assets/images/1.png"),
+  require("../assets/images/2.png"),
+  require("../assets/images/3.png"),
+  require("../assets/images/4.png"),
+  require("../assets/images/5.png"),
+];
 
 const useCachedResources = () => {
   const [isLoadingComplete, setLoadingComplete] = useState<boolean>(false);
@@ -13,6 +22,7 @@ const useCachedResources = () => {
         "SFProDisplay-Semibold": require("../assets/fonts/SF-Pro-Display-Semibold.otf"),
         "SFProDisplay-Bold": require("../assets/fonts/SF-Pro-Display-Bold.otf"),
       });
+      await Asset.loadAsync([...images]);
     } catch (e) {
       console.warn(e);
     } finally {

@@ -6,20 +6,20 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import Animated, { multiply } from "react-native-reanimated";
+import Animated, { divide, multiply } from "react-native-reanimated";
 import {
   onScrollEvent,
   useValue,
   interpolateColor,
 } from "react-native-redash/lib/module/v1";
 
-import { slides } from "../../../data/onboardingSlides";
+import { slides } from "../../../constants/onboardingSlides";
 
-import Slide, { SLIDE_HEIGHT } from "./Slide";
+import Slide, { SLIDE_HEIGHT, BORDER_RADIUS } from "./Slide";
 import SubSlide from "./SubSlide";
+import Dot from "./Dot";
 
 const { width } = Dimensions.get("window");
-const BORDER_RADIUS = 75;
 
 const styles = StyleSheet.create({
   container: {
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
   },
   slider: {
     height: SLIDE_HEIGHT,
-    backgroundColor: "cyan",
     borderBottomRightRadius: BORDER_RADIUS,
   },
   footer: {
@@ -36,9 +35,15 @@ const styles = StyleSheet.create({
   },
   footerContent: {
     flex: 1,
-    flexDirection: "row",
     backgroundColor: "white",
     borderTopLeftRadius: BORDER_RADIUS,
+  },
+  pagination: {
+    ...StyleSheet.absoluteFillObject,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: BORDER_RADIUS,
   },
 });
 
@@ -50,11 +55,6 @@ const Onboarding: React.FC = () => {
     inputRange: slides.map((_, i) => i * width),
     outputRange: slides.map(slide => slide.color),
   });
-  const footerContentStyle: StyleProp<Animated.AnimateStyle<ViewStyle>> = {
-    ...styles.footerContent,
-    width: width * slides.length,
-    transform: [{ translateX: multiply(x, -1) }],
-  };
 
   const handleScrollToNextSlide = (index: number) => {
     if (scroll.current) {
@@ -62,6 +62,13 @@ const Onboarding: React.FC = () => {
         .getNode()
         .scrollTo({ x: width * (index + 1), animated: true });
     }
+  };
+
+  const subSliderContainerStyle: StyleProp<Animated.AnimateStyle<ViewStyle>> = {
+    flex: 1,
+    flexDirection: "row",
+    width: width * slides.length,
+    transform: [{ translateX: multiply(x, -1) }],
   };
 
   return (
@@ -77,8 +84,8 @@ const Onboarding: React.FC = () => {
           scrollEventThrottle={1}
           {...{ onScroll }}
         >
-          {slides.map(({ title }, index) => (
-            <Slide key={index} {...{ title }} right={!!(index % 2)} />
+          {slides.map(({ title, picture }, index) => (
+            <Slide key={index} {...{ title, picture }} right={!!(index % 2)} />
           ))}
         </Animated.ScrollView>
       </Animated.View>
@@ -89,16 +96,23 @@ const Onboarding: React.FC = () => {
             backgroundColor,
           }}
         />
-        <Animated.View style={footerContentStyle}>
-          {slides.map(({ subtitle, desc }, index) => (
-            <SubSlide
-              key={index}
-              {...{ subtitle, desc }}
-              last={index === slides.length - 1}
-              onButtonPress={() => handleScrollToNextSlide(index)}
-            />
-          ))}
-        </Animated.View>
+        <View style={styles.footerContent}>
+          <View style={styles.pagination}>
+            {slides.map((_, index) => (
+              <Dot key={index} currentIndex={divide(x, width)} {...{ index }} />
+            ))}
+          </View>
+          <Animated.View style={subSliderContainerStyle}>
+            {slides.map(({ subtitle, desc }, index) => (
+              <SubSlide
+                key={index}
+                {...{ subtitle, desc }}
+                last={index === slides.length - 1}
+                onButtonPress={() => handleScrollToNextSlide(index)}
+              />
+            ))}
+          </Animated.View>
+        </View>
       </View>
     </View>
   );

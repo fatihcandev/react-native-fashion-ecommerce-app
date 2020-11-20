@@ -21,6 +21,7 @@ import {
 
 import theme from "../../../theme";
 import { slides } from "../../../constants/onboardingSlides";
+import { AuthRoutes, StackNavigationProps } from "../../../types";
 
 import Slide, { SLIDE_HEIGHT } from "./Slide";
 import SubSlide from "./SubSlide";
@@ -63,7 +64,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const Onboarding: React.FC = () => {
+const Onboarding = ({
+  navigation,
+}: StackNavigationProps<AuthRoutes, "Onboarding">) => {
   const scroll = useRef<Animated.ScrollView>(null);
   const x = useValue(0);
   const onScroll = onScrollEvent({ x });
@@ -72,10 +75,12 @@ const Onboarding: React.FC = () => {
     outputRange: slides.map(slide => slide.color),
   });
 
-  const handleScrollToNextSlide = (index: number) => {
-    if (scroll.current) {
+  const handleScrollToNextSlide = (index: number, last: boolean) => {
+    if (last) {
+      navigation.navigate("Welcome");
+    } else {
       scroll.current
-        .getNode()
+        ?.getNode()
         .scrollTo({ x: width * (index + 1), animated: true });
     }
   };
@@ -135,14 +140,16 @@ const Onboarding: React.FC = () => {
             ))}
           </View>
           <Animated.View style={subSliderContainerStyle}>
-            {slides.map(({ subtitle, desc }, index) => (
-              <SubSlide
-                key={index}
-                {...{ subtitle, desc }}
-                last={index === slides.length - 1}
-                onButtonPress={() => handleScrollToNextSlide(index)}
-              />
-            ))}
+            {slides.map(({ subtitle, desc }, index) => {
+              const last = index === slides.length - 1;
+              return (
+                <SubSlide
+                  key={index}
+                  {...{ subtitle, desc, last }}
+                  onButtonPress={() => handleScrollToNextSlide(index, last)}
+                />
+              );
+            })}
           </Animated.View>
         </View>
       </View>

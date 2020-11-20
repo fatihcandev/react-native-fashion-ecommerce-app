@@ -1,11 +1,11 @@
-import { createText, createTheme } from "@shopify/restyle";
+import { createBox, createText, createTheme } from "@shopify/restyle";
 
 const theme = createTheme({
   colors: {
     primary: "#2cb9b0",
     secondary: "rgba(12, 13, 52, 0.05)",
     transparent: "transparent",
-    title: "#0c0d34",
+    darkBlue: "#0c0d34",
     text: "rgba(12, 13, 52, 0.7)",
     white: "white",
   },
@@ -32,13 +32,13 @@ const theme = createTheme({
     titlePrimary: {
       fontSize: 28,
       fontFamily: "SFProDisplay-Semibold",
-      color: "title",
+      color: "darkBlue",
     },
     titleSecondary: {
       fontSize: 24,
       lineHeight: 30,
       fontFamily: "SFProDisplay-Semibold",
-      color: "title",
+      color: "darkBlue",
     },
     body: {
       fontSize: 16,
@@ -57,4 +57,5 @@ const theme = createTheme({
 
 export type Theme = typeof theme;
 export const StyledText = createText<Theme>();
+export const Box = createBox<Theme>();
 export default theme;

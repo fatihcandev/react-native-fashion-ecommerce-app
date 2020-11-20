@@ -41,9 +41,11 @@ const SubSlide: React.FC<ISubSlideProps> = ({
       <StyledText variant="body" style={styles.desc}>
         {desc}
       </StyledText>
-      <Button variant={last ? "primary" : "secondary"} onPress={onButtonPress}>
-        {last ? "Let's get started" : "Next"}
-      </Button>
+      <Button
+        variant={last ? "primary" : "secondary"}
+        label={last ? "Let's get started" : "Next"}
+        onPress={onButtonPress}
+      />
     </View>
   );
 };

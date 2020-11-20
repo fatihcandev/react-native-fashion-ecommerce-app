@@ -17,11 +17,13 @@ const styles = StyleSheet.create({
 
 interface IButtonProps {
   variant: "primary" | "secondary" | "transparent";
+  label?: string;
   onPress: () => void;
 }
 
 const Button: React.FC<IButtonProps> = ({
   variant = "secondary",
+  label,
   onPress,
   children,
 }) => {
@@ -34,9 +36,13 @@ const Button: React.FC<IButtonProps> = ({
       style={[styles.container, { backgroundColor }]}
       {...{ onPress }}
     >
-      <StyledText variant="button" style={{ color }}>
-        {children}
-      </StyledText>
+      {children ? (
+        children
+      ) : (
+        <StyledText variant="button" style={{ color }}>
+          {label}
+        </StyledText>
+      )}
     </RectButton>
   );
 };

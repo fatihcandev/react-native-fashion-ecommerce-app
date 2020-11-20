@@ -63,16 +63,19 @@ const Welcome = ({
           </StyledText>
           <Button
             variant="primary"
+            label="Have an account? Log in"
             onPress={() => navigation.navigate("LogIn")}
-          >
-            Have an account? Log in
-          </Button>
-          <Button variant="secondary" onPress={() => true}>
-            Join us. It's free
-          </Button>
-          <Button variant="transparent" onPress={() => true}>
-            Forgot password?
-          </Button>
+          />
+          <Button
+            variant="secondary"
+            label="Join us. It's free"
+            onPress={() => true}
+          />
+          <Button
+            variant="transparent"
+            label="Forgot password?"
+            onPress={() => true}
+          />
         </View>
       </View>
     </SafeAreaView>

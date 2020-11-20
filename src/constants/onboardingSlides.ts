@@ -1,9 +1,11 @@
+import { ImageRequireSource } from "react-native";
+
 interface OnBoardingSlideData {
   title: string;
   subtitle: string;
   desc: string;
   color: string;
-  picture: number;
+  picture: ImageRequireSource;
 }
 
 export const slides: OnBoardingSlideData[] = [

@@ -2,6 +2,7 @@ import React from "react";
 import {
   Dimensions,
   Image,
+  ImageRequireSource,
   StyleProp,
   StyleSheet,
   View,
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
 interface ISlideProps {
   title: string;
   right?: boolean;
-  picture: number;
+  picture: ImageRequireSource;
 }
 
 const Slide: React.FC<ISlideProps> = ({ title, right, picture }) => {

@@ -12,4 +12,11 @@ export interface StackNavigationProps<
 export type AuthRoutes = {
   Onboarding: undefined;
   Welcome: undefined;
+  LogIn: undefined;
 };
+
+export enum IconName {
+  google = "google",
+  facebook = "facebook",
+  apple = "apple",
+}

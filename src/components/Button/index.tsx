@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 interface IButtonProps {
-  variant: "primary" | "secondary";
+  variant: "primary" | "secondary" | "transparent";
   onPress: () => void;
 }
 

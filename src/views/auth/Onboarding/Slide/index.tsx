@@ -4,10 +4,11 @@ import {
   Image,
   StyleProp,
   StyleSheet,
-  Text,
   View,
   ViewStyle,
 } from "react-native";
+
+import { StyledText } from "../../../../components/Theme";
 
 const { width, height } = Dimensions.get("window");
 export const SLIDE_HEIGHT = 0.6 * height;
@@ -28,13 +29,6 @@ const styles = StyleSheet.create({
   titleContainer: {
     height: 100,
     justifyContent: "center",
-  },
-  title: {
-    fontSize: 80,
-    lineHeight: 80,
-    color: "white",
-    fontFamily: "SF-Pro-Text-Bold",
-    textAlign: "center",
   },
 });
 
@@ -66,7 +60,7 @@ const Slide: React.FC<ISlideProps> = ({ title, right, picture }) => {
         <Image source={picture} style={styles.picture} />
       </View>
       <View style={titleStyle}>
-        <Text style={styles.title}>{title}</Text>
+        <StyledText variant="hero">{title}</StyledText>
       </View>
     </View>
   );

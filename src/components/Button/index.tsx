@@ -1,9 +1,9 @@
 import React from "react";
-import { Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { useTheme } from "@shopify/restyle";
 
-import { Theme } from "../../theme";
+import { StyledText, Theme } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
@@ -12,12 +12,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
-  },
-  label: {
-    // Update font
-    fontSize: 15,
-    fontFamily: "SF-Pro-Text-Regular",
-    textAlign: "center",
   },
 });
 
@@ -40,7 +34,9 @@ const Button: React.FC<IButtonProps> = ({
       style={[styles.container, { backgroundColor }]}
       {...{ onPress }}
     >
-      <Text style={[styles.label, { color }]}>{children}</Text>
+      <StyledText variant="button" style={{ color }}>
+        {children}
+      </StyledText>
     </RectButton>
   );
 };

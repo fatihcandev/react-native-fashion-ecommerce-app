@@ -1,16 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import * as Font from "expo-font";
 
-export default function useCachedResources() {
+const useCachedResources = () => {
   const [isLoadingComplete, setLoadingComplete] = useState<boolean>(false);
 
   const loadResourcesAndDataAsync = useCallback(async () => {
     try {
       // Load fonts
       await Font.loadAsync({
-        "SF-Pro-Text-Regular": require("../assets/fonts/SF-Pro-Text-Regular.otf"),
-        "SF-Pro-Text-Semibold": require("../assets/fonts/SF-Pro-Text-Semibold.otf"),
-        "SF-Pro-Text-Bold": require("../assets/fonts/SF-Pro-Text-Bold.otf"),
+        "SFProDisplay-Regular": require("../assets/fonts/SF-Pro-Display-Regular.otf"),
+        "SFProDisplay-Medium": require("../assets/fonts/SF-Pro-Display-Medium.otf"),
+        "SFProDisplay-Semibold": require("../assets/fonts/SF-Pro-Display-Semibold.otf"),
+        "SFProDisplay-Bold": require("../assets/fonts/SF-Pro-Display-Bold.otf"),
       });
     } catch (e) {
       console.warn(e);
@@ -25,4 +26,6 @@ export default function useCachedResources() {
   }, [loadResourcesAndDataAsync]);
 
   return isLoadingComplete;
-}
+};
+
+export default useCachedResources;

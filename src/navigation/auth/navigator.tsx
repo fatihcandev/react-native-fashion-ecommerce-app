@@ -1,9 +1,9 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Onboarding from "../views/auth/Onboarding";
-import Welcome from "../views/auth/Welcome";
-import { AuthRoutes } from "../types";
+import Onboarding from "../../views/auth/Onboarding";
+import Welcome from "../../views/auth/Welcome";
+import { AuthRoutes } from "../../types";
 
 const AuthStack = createStackNavigator<AuthRoutes>();
 

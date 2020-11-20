@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 
 import Button from "../../../../components/Button";
-import { StyledText } from "../../../../components/Theme";
+import { StyledText } from "../../../../theme";
 
 const styles = StyleSheet.create({
   container: {

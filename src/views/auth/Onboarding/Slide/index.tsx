@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from "react-native";
 
-import { StyledText } from "../../../../components/Theme";
+import { StyledText } from "../../../../theme";
 
 const { width, height } = Dimensions.get("window");
 export const SLIDE_HEIGHT = 0.6 * height;

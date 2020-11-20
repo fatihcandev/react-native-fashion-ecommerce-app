@@ -3,7 +3,7 @@ import { Text, StyleSheet } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { useTheme } from "@shopify/restyle";
 
-import { Theme } from "../Theme";
+import { Theme } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {

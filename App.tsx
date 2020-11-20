@@ -3,7 +3,7 @@ import { ThemeProvider } from "@shopify/restyle";
 
 import useCachedResources from "./src/utils/useCachedResources";
 import AuthNavigation from "./src/navigation/AuthNavigation";
-import theme from "./src/components/Theme";
+import theme from "./src/theme";
 
 const App: React.FC = () => {
   const isLoadingComplete = useCachedResources();

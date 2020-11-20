@@ -1,34 +1,50 @@
 import React, { useRef } from "react";
 import {
   Dimensions,
+  Image,
   StyleProp,
   StyleSheet,
   View,
   ViewStyle,
 } from "react-native";
-import Animated, { divide, multiply } from "react-native-reanimated";
+import Animated, {
+  divide,
+  Extrapolate,
+  interpolate,
+  multiply,
+} from "react-native-reanimated";
 import {
   onScrollEvent,
   useValue,
   interpolateColor,
 } from "react-native-redash/lib/module/v1";
 
+import theme from "../../../theme";
 import { slides } from "../../../constants/onboardingSlides";
 
-import Slide, { SLIDE_HEIGHT, BORDER_RADIUS } from "./Slide";
+import Slide, { SLIDE_HEIGHT } from "./Slide";
 import SubSlide from "./SubSlide";
 import Dot from "./Dot";
 
 const { width } = Dimensions.get("window");
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
   },
+  underlay: {
+    ...StyleSheet.absoluteFillObject,
+    borderBottomRightRadius: theme.borderRadii.xl,
+    overflow: "hidden",
+  },
+  picture: {
+    width: "75%",
+    height: "100%",
+    alignSelf: "center",
+  },
   slider: {
     height: SLIDE_HEIGHT,
-    borderBottomRightRadius: BORDER_RADIUS,
+    borderBottomRightRadius: theme.borderRadii.xl,
   },
   footer: {
     flex: 1,
@@ -36,7 +52,7 @@ const styles = StyleSheet.create({
   footerContent: {
     flex: 1,
     backgroundColor: "white",
-    borderTopLeftRadius: BORDER_RADIUS,
+    borderTopLeftRadius: theme.borderRadii.xl,
   },
   pagination: {
     ...StyleSheet.absoluteFillObject,
@@ -74,6 +90,22 @@ const Onboarding: React.FC = () => {
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.slider, { backgroundColor }]}>
+        {slides.map(({ picture }, index) => {
+          const opacity = interpolate(x, {
+            inputRange: [
+              (index - 0.5) * width,
+              index * width,
+              (index + 0.5) * width,
+            ],
+            outputRange: [0, 1, 0],
+            extrapolate: Extrapolate.CLAMP,
+          });
+          return (
+            <Animated.View key={index} style={[styles.underlay, { opacity }]}>
+              <Image source={picture} style={styles.picture} />
+            </Animated.View>
+          );
+        })}
         <Animated.ScrollView
           ref={scroll}
           horizontal

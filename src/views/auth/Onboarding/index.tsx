@@ -7,6 +7,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, {
   divide,
   Extrapolate,
@@ -93,7 +94,7 @@ const Onboarding = ({
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Animated.View style={[styles.slider, { backgroundColor }]}>
         {slides.map(({ picture }, index) => {
           const opacity = interpolate(x, {
@@ -153,7 +154,7 @@ const Onboarding = ({
           </Animated.View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

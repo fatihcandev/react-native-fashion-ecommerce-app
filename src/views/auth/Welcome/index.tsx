@@ -1,8 +1,10 @@
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import Button from "../../../components/Button";
 import theme, { StyledText } from "../../../theme";
+import { AuthRoutes, StackNavigationProps } from "../../../types";
 
 const styles = StyleSheet.create({
   container: {
@@ -27,7 +29,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: theme.colors.secondary,
   },
-  footerCurvedShape: {
+  footerContent: {
     flex: 1,
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -44,31 +46,36 @@ const picture = {
   src: require("../../../assets/images/5.png"),
 };
 
-const Welcome: React.FC = () => {
+const Welcome = ({
+  navigation,
+}: StackNavigationProps<AuthRoutes, "Onboarding">) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.heroSection}>
         <Image source={picture.src} style={styles.picture} />
       </View>
       <View style={styles.footer}>
         <View style={styles.footerAbsBg} />
-        <View style={styles.footerCurvedShape}>
+        <View style={styles.footerContent}>
           <StyledText variant="titlePrimary">Let's get started</StyledText>
           <StyledText variant="body" style={styles.body}>
             Log in to your account below or sign up for an amazing experience
           </StyledText>
-          <Button variant="primary" onPress={() => {}}>
+          <Button
+            variant="primary"
+            onPress={() => navigation.navigate("LogIn")}
+          >
             Have an account? Log in
           </Button>
-          <Button variant="secondary" onPress={() => {}}>
+          <Button variant="secondary" onPress={() => true}>
             Join us. It's free
           </Button>
-          <Button variant="transparent" onPress={() => {}}>
+          <Button variant="transparent" onPress={() => true}>
             Forgot password?
           </Button>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

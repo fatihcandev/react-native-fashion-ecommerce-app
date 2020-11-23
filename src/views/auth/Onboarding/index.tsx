@@ -4,7 +4,6 @@ import {
   Image,
   StyleProp,
   StyleSheet,
-  View,
   ViewStyle,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -20,7 +19,7 @@ import {
   interpolateColor,
 } from "react-native-redash/lib/module/v1";
 
-import theme from "../../../theme";
+import theme, { Box } from "../../../theme";
 import { slides } from "../../../constants/onboardingSlides";
 import { AuthRoutes, StackNavigationProps } from "../../../types";
 
@@ -31,7 +30,6 @@ import Dot from "./Dot";
 const { width } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "white",
   },
   underlay: {
@@ -47,21 +45,6 @@ const styles = StyleSheet.create({
   slider: {
     height: SLIDE_HEIGHT,
     borderBottomRightRadius: theme.borderRadii.xl,
-  },
-  footer: {
-    flex: 1,
-  },
-  footerContent: {
-    flex: 1,
-    backgroundColor: "white",
-    borderTopLeftRadius: theme.borderRadii.xl,
-  },
-  pagination: {
-    ...StyleSheet.absoluteFillObject,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    height: 50,
   },
 });
 
@@ -127,19 +110,25 @@ const Onboarding = ({
           ))}
         </Animated.ScrollView>
       </Animated.View>
-      <View style={styles.footer}>
+      <Box flex={1}>
         <Animated.View
           style={{
             ...StyleSheet.absoluteFillObject,
             backgroundColor,
           }}
         />
-        <View style={styles.footerContent}>
-          <View style={styles.pagination}>
+        <Box flex={1} backgroundColor="white" borderTopLeftRadius="xl">
+          <Box
+            style={{ ...StyleSheet.absoluteFillObject }}
+            height={50}
+            flexDirection="row"
+            justifyContent="center"
+            alignItems="center"
+          >
             {slides.map((_, index) => (
               <Dot key={index} currentIndex={divide(x, width)} {...{ index }} />
             ))}
-          </View>
+          </Box>
           <Animated.View style={subSliderContainerStyle}>
             {slides.map(({ subtitle, desc }, index) => {
               const last = index === slides.length - 1;
@@ -152,8 +141,8 @@ const Onboarding = ({
               );
             })}
           </Animated.View>
-        </View>
-      </View>
+        </Box>
+      </Box>
     </SafeAreaView>
   );
 };

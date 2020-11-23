@@ -1,16 +1,10 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import Button from "../../../../components/Button";
-import { StyledText } from "../../../../theme";
+import { Box, StyledText } from "../../../../theme";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 44,
-  },
   subtitle: {
     marginBottom: 12,
   },
@@ -34,7 +28,7 @@ const SubSlide: React.FC<ISubSlideProps> = ({
   onButtonPress,
 }) => {
   return (
-    <View style={styles.container}>
+    <Box flex={1} justifyContent="center" alignItems="center" padding="xl">
       <StyledText variant="titleSecondary" style={styles.subtitle}>
         {subtitle}
       </StyledText>
@@ -46,7 +40,7 @@ const SubSlide: React.FC<ISubSlideProps> = ({
         label={last ? "Let's get started" : "Next"}
         onPress={onButtonPress}
       />
-    </View>
+    </Box>
   );
 };
 

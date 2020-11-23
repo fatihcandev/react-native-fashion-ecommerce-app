@@ -8,6 +8,9 @@ const images = [
   require("../assets/images/3.png"),
   require("../assets/images/4.png"),
   require("../assets/images/5.png"),
+  require("../assets/images/pattern1.png"),
+  require("../assets/images/pattern2.png"),
+  require("../assets/images/pattern3.png"),
 ];
 
 const useCachedResources = () => {

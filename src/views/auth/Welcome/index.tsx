@@ -1,44 +1,19 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Button from "../../../components/Button";
-import theme, { StyledText } from "../../../theme";
+import theme, { Box, StyledText } from "../../../theme";
 import { AuthRoutes, StackNavigationProps } from "../../../types";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: theme.colors.white,
-  },
-  heroSection: {
-    flex: 1,
-    borderBottomRightRadius: theme.borderRadii.xl,
-    backgroundColor: theme.colors.secondary,
   },
   picture: {
     width: "75%",
     height: "100%",
     alignSelf: "center",
-  },
-  footer: {
-    flex: 1,
-    borderTopLeftRadius: theme.borderRadii.xl,
-  },
-  footerAbsBg: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: theme.colors.secondary,
-  },
-  footerContent: {
-    flex: 1,
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    paddingHorizontal: theme.spacing.xl,
-    backgroundColor: theme.colors.white,
-    borderTopLeftRadius: theme.borderRadii.xl,
-  },
-  body: {
-    textAlign: "center",
   },
 });
 
@@ -51,14 +26,24 @@ const Welcome = ({
 }: StackNavigationProps<AuthRoutes, "Onboarding">) => {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.heroSection}>
+      <Box flex={1} borderBottomRightRadius="xl" backgroundColor="secondary">
         <Image source={picture.src} style={styles.picture} />
-      </View>
-      <View style={styles.footer}>
-        <View style={styles.footerAbsBg} />
-        <View style={styles.footerContent}>
+      </Box>
+      <Box flex={1} borderTopLeftRadius="xl">
+        <Box
+          style={{ ...StyleSheet.absoluteFillObject }}
+          backgroundColor="secondary"
+        />
+        <Box
+          flex={1}
+          justifyContent="center"
+          alignItems="center"
+          paddingHorizontal="xl"
+          backgroundColor="white"
+          borderTopLeftRadius="xl"
+        >
           <StyledText variant="titlePrimary">Let's get started</StyledText>
-          <StyledText variant="body" style={styles.body}>
+          <StyledText variant="body" textAlign="center">
             Log in to your account below or sign up for an amazing experience
           </StyledText>
           <Button
@@ -76,8 +61,8 @@ const Welcome = ({
             label="Forgot password?"
             onPress={() => true}
           />
-        </View>
-      </View>
+        </Box>
+      </Box>
     </SafeAreaView>
   );
 };

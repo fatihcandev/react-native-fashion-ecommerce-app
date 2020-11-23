@@ -1,26 +1,10 @@
 import React from "react";
-import {
-  Dimensions,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from "react-native";
+import { Dimensions, StyleProp, ViewStyle } from "react-native";
 
-import { StyledText } from "../../../../theme";
+import { Box, StyledText } from "../../../../theme";
 
 const { width, height } = Dimensions.get("window");
 export const SLIDE_HEIGHT = 0.6 * height;
-
-const styles = StyleSheet.create({
-  container: {
-    width,
-  },
-  titleContainer: {
-    height: 100,
-    justifyContent: "center",
-  },
-});
 
 interface ISlideProps {
   title: string;
@@ -29,7 +13,6 @@ interface ISlideProps {
 
 const Slide: React.FC<ISlideProps> = ({ title, right }) => {
   const titleStyle: StyleProp<ViewStyle> = {
-    ...styles.titleContainer,
     transform: [
       {
         translateY: (SLIDE_HEIGHT - 100) / 2,
@@ -44,11 +27,11 @@ const Slide: React.FC<ISlideProps> = ({ title, right }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={titleStyle}>
+    <Box {...{ width }}>
+      <Box height={100} justifyContent="center" style={titleStyle}>
         <StyledText variant="hero">{title}</StyledText>
-      </View>
-    </View>
+      </Box>
+    </Box>
   );
 };
 

@@ -30,6 +30,7 @@ import Dot from "./Dot";
 const { width } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: "white",
   },
   underlay: {
